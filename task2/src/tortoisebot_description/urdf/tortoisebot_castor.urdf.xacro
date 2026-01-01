@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="castor" params="width height length side parent_link xyz rpy">
+
+        <link name="${side}_caster">
+            <visual>
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            <material name="silver"/>
+            </visual>
+            <collision>
+            <geometry>
+                <box size="${length} ${width} ${height}"/>
+            </geometry>
+            </collision>
+            <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.00083" iyy="0.00083" izz="0.000167" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+        </link>
+
+        <joint name="front_caster_joint" type="continuous">
+            <axis xyz="0 0 1"/>
+            <parent link="${parent_link}"/>
+            <child link="${side}_caster"/>
+            <origin rpy="${rpy}" xyz="${xyz}"/>
+        </joint>
+    </xacro:macro>
+</robot>
