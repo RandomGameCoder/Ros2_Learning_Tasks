@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<robot name="tortoisebot" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="body_length" value="0.6" />
+    <xacro:property name="body_width" value="0.3" />
+    <xacro:property name="body_height" value="0.3" />
+
+    <xacro:property name="castor_length" value="0.1" />
+    <xacro:property name="castor_width" value="0.1" />
+    <xacro:property name="castor_height" value="0.3" />
+
+    <xacro:property name="wheel_radius" value="0.035" />
+    <xacro:property name="wheel_width" value="0.05" />
+
+    <xacro:include filename="$(find tortoisebot_description)/urdf/tortoisebot_base.urdf.xacro"/>
+    <xacro:include filename="$(find tortoisebot_description)/urdf/tortoisebot_wheel.urdf.xacro"/>
+    <xacro:include filename="$(find tortoisebot_description)/urdf/tortoisebot_castor.urdf.xacro"/>
+    <xacro:include filename="$(find tortoisebot_description)/urdf/tortoisebot_plugins.urdf.xacro"/>
+
+    <xacro:base body_length="${body_length}" body_width="${body_width}" body_height="${body_height}"/>
+    <xacro:castor width="${castor_width}" height="${castor_height}" length="${castor_length}" side="front" parent_link="base_link" xyz="${body_length/2} 0 0" rpy="0 0 0"/>
+    <xacro:wheel radius="${wheel_radius}" width="${wheel_width}" side="front" parent_link="front_caster" xyz="${castor_length/2} 0 -${castor_height/2}" rpy="1.5708 0 0"/>
+    <xacro:wheel radius="${wheel_radius}" width="${wheel_width}" side="left" parent_link="base_link" xyz="-${body_length/2} ${body_width/2} -${body_height/2}" rpy="-1.57080 0 0"/>
+    <xacro:wheel radius="${wheel_radius}" width="${wheel_width}" side="right" parent_link="base_link" xyz="-${body_length/2} -${body_width/2} -${body_height/2}" rpy="-1.5708 0 0"/>
+
+    <xacro:diff_drive wheel_radius="${wheel_radius}" body_width="${body_width}"/>
+    <xacro:joint_state_publisher/>
+</robot>
